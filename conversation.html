@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="scripts/handlebars-v4.0.2.js"></script>
+  <script src="scripts/jquery-2.1.4.min.js"></script>
+  <link rel="stylesheet" href="styles/skeleton.css">
+  <link rel="stylesheet" href="styles/normalize.css">
+  <link rel="stylesheet" href="styles/header.css">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,800,200' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<script id="convo-template" type="text/x-handlebars-template">
+  <div class="header">
+    <div id="nav" class="twelve columns">
+       <ul>
+           <img class="navlogo" src="img/logo.svg"></img>
+           <li><a href="login.html">Logout</a></li>
+           <li><a href="#">Anti Penpal</a></li>
+       </ul>
+    </div>
+  </div>
+  <div class="intro container">
+    <div class="row">
+      <div class="seven columns">
+        <h3 style="margin-bottom: 0">Q: {{question}}</h3>
+      </div>
+      <div class="three columns">
+        <h5 class="category u-pull-right">Trivial Opinion</h5>
+      </div>
+      <div class="two columns">
+        <h3 class="u-pull-right" style="margin-bottom: 0">+ {{rating}}</h3>
+      </div>
+    </div>
+    <div class="row">
+      <h6>Last updated on {{message.0.time}}</h6>
+    </div>
+    <div class="row spaced">
+      <div class="two columns">
+        <img class="img-circle" src="img/chuck.jpg">
+      </div>
+      <div class="four columns">
+        <p><b>{{user.0.name}} says:</b><br> {{user.0.stance}}</p>
+      </div>
+      <div class="four columns">
+        <p class="u-pull-right"><b>{{user.1.name}} says:</b><br> {{user.1.stance}}</p>
+      </div>
+      <div class="two columns">
+        <img class="img-circle u-pull-right" src="img/dave.jpg">
+      </div>
+    </div>
+    <div style="text-align:center">
+      <a class="button" href="index.html">Return to Main</a>
+    </div>
+    <hr>
+  </div>
+
+  <div class="messages container">
+    {{#each message}}
+    <div class="message">
+      <div class="row">
+        <div class="two columns">
+          <h5>{{name}}</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          {{content}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="five columns u-pull-right">
+          <h5 class="u-pull-right" style="margin: 2rem 0">{{time}}</h5>
+        </div>
+      </div>
+    </div>
+    <hr>
+    {{/each}}
+  </div>
+</script>
+
+<script>
+  var source = $("#convo-template").html();
+  var template = Handlebars.compile(source);
+  var convoID = window.location.href.split('#')[1].toString();
+  var text = '{"001": {"question": "What is the best color?",'+
+              '"rating": "128",'+
+              '"user": ['+
+                '{"name": "Chuck", "stance": "My favorite color is blood."},'+
+                '{"name": "Dave", "stance": "I have always loved blue. It is by far the calmest color, regardless of shade. It reminds me of a cool stream, winding lazily through a forest in the spring."}],'+
+              '"message": ['+
+                '{"name": "Chuck", "time": "Tuesday, July 4th, 4:38PM", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a pretium ante, at ultricies mauris. Phasellus ac odio lobortis, dignissim augue sed, sagittis enim. Pellentesque vitae tincidunt urna. Ut consequat feugiat fermentum. Fusce quis mauris molestie, cursus dolor ac, rhoncus mauris. Pellentesque vulputate nunc et volutpat viverra. Aenean laoreet lacus ut diam lobortis ornare.Nulla mollis leo nulla, vitae consectetur ex volutpat ut. Fusce cursus, urna interdum ultricies porta, dui urna vehicula orci, at consectetur sapien ligula ultrices purus. Praesent nunc magna, gravida ut lectus in, mattis ultrices quam. Ut convallis nisl eu massa luctus, a cursus velit tempus. Proin imperdiet aliquet consectetur. Mauris placerat eu justo id tincidunt. Nam et nisl arcu.Cras eu tortor lacus. Donec neque libero, dictum ac lacus nec, finibus tempor metus. In nec nisl diam. Nullam ac ullamcorper nunc. Maecenas vestibulum pharetra blandit. Aliquam at elementum dui. Ut ac suscipit urna. Integer lectus nisi, pretium ut consequat a, sagittis et enim. Nullam maximus orci ac tincidunt blandit. Maecenas quam est, facilisis at mauris sed, suscipit congue mi. Aenean aliquam a ipsum non varius. Quisque ultrices enim lacus, in finibus elit interdum pharetra. Quisque vel ex tristique, laoreet dui in, tristique lectus. Morbi id augue malesuada, facilisis lectus nec, congue justo. Maecenas non eros ultrices, porta arcu semper, condimentum purus. Curabitur id tincidunt est."},'+
+                '{"name": "Dave", "time": "Tuesday, July 4th, 5:05PM", "content": "Ut convallis nisl eu massa luctus, a cursus velit tempus. Proin imperdiet aliquet consectetur. Mauris placerat eu justo id tincidunt. Nam et nisl arcu.Cras eu tortor lacus. Donec neque libero, dictum ac lacus nec, finibus tempor metus. In nec nisl diam."},'+
+                '{"name": "Chuck", "time": "Thursday, July 6th, 6:00PM", "content": "usce cursus, urna interdum ultricies porta, dui urna vehicula orci, at consectetur sapien ligula ultrices purus. Praesent nunc magna, gravida ut lectus in, mattis ultrices quam. Ut convallis nisl eu massa luctus, a cursus velit tempus. Proin imperdiet aliquet consectetur. Mauris placerat eu justo id tincidunt. Nam et nisl arcu.Cras eu tortor lacus. Donec neque libero, dictum ac lacus nec, finibus tempor metus. In nec nisl diam. Nullam ac ullamcorper nunc. Maecenas vestibulum pharetra blandit. Aliquam at elementum dui. Ut ac suscipit urna. Integer lectus nisi, pretium ut consequat a, sagittis et enim. Nullam maximus orci ac tincidunt blandit. Maecenas quam est, facilisis at mauris sed, suscipit congue mi. Aenean aliquam a ipsum non varius. Quisque ultrices enim lacus, in finibus elit interdum pharetra. Quisque vel ex tristique, laoreet dui in, tristique lectus. Morbi id augue malesuada, facilisis lectus nec, congue justo. Maecenas non eros ultrices, porta arcu semper, condimentum purus."}]},'+
+              '"002": {"question": "How do you feel about cats?", "rating": "2",'+ 
+                          '"user": [{"name": "Chuck", "stance": "I like cats!"},{"name": "Dave", "stance": "Cats eat their owners if they die."}]},'+
+              '"003": {"question": "How about that pope guy?", "rating": "103",'+
+                          '"user": [{"name": "Chuck", "stance": "The pope is dope."},{"name": "Dave", "stance": "Nah, brah."}]}}';
+
+  var context = JSON.parse(text);
+  var newContext = context[convoID];
+  
+  $(document.body).append(template(newContext));
+</script>
+</body>
+</html>
